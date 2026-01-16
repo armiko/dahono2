@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Dahono</title>
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['DM Sans', 'sans-serif'],
+                        inter: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            primary: '#DC2626', // Updated to Red
+                            dark: '#050505',
+                            card: '#0F0F0F'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #050505; color: #ffffff; }
+        .glass-nav { background: rgba(5, 5, 5, 0.7); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand-primary selection:text-white">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 glass-nav">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2">
+                <div class="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
+                    <span class="text-black font-bold text-lg">D</span>
+                </div>
+                <span class="font-bold text-xl text-white">DAHONO</span>
+            </a>
+            <a href="index.html" class="text-sm text-gray-400 hover:text-white flex items-center gap-1">
+                <i data-lucide="arrow-left" class="w-4 h-4"></i> Back to Home
+            </a>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <main class="pt-32 pb-20 px-6 max-w-4xl mx-auto">
+        <h1 class="text-4xl md:text-5xl font-bold mb-8 text-white">Privacy Policy</h1>
+        <p class="text-gray-400 mb-8 text-sm uppercase tracking-wide">Last Updated: January 17, 2026</p>
+
+        <div class="space-y-8 text-gray-300 font-inter leading-relaxed">
+            <p>At PT Dahono Consulting Agency ("Dahono", "we", "us"), we respect your privacy and are committed to protecting your personal data. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website or use our management and legal consulting services.</p>
+
+            <h2 class="text-2xl font-bold text-white mt-10">1. Information We Collect</h2>
+            <p>We may collect personal information such as your name, email address, phone number, and company details when you:</p>
+            <ul class="list-disc pl-6 space-y-2">
+                <li>Contact us via email or contact forms.</li>
+                <li>Sign up for our newsletter or services.</li>
+                <li>Engage with us for consulting or legal services.</li>
+            </ul>
+
+            <h2 class="text-2xl font-bold text-white mt-10">2. How We Use Your Information</h2>
+            <p>We use the collected information for the following purposes:</p>
+            <ul class="list-disc pl-6 space-y-2">
+                <li>To provide and manage our services to you.</li>
+                <li>To communicate with you regarding your inquiries or projects.</li>
+                <li>To improve our website and client experience.</li>
+                <li>To comply with legal obligations.</li>
+            </ul>
+
+            <h2 class="text-2xl font-bold text-white mt-10">3. Data Protection</h2>
+            <p>We implement appropriate technical and organizational measures to ensure a level of security appropriate to the risk, protecting your data from unauthorized access, alteration, disclosure, or destruction.</p>
+
+            <h2 class="text-2xl font-bold text-white mt-10">4. Third-Party Sharing</h2>
+            <p>We do not sell your personal data. We may share information with trusted third-party service providers who assist us in operating our website or conducting our business, so long as those parties agree to keep this information confidential.</p>
+
+            <h2 class="text-2xl font-bold text-white mt-10">5. Contact Us</h2>
+            <p>If you have any questions about this Privacy Policy, please contact us at:</p>
+            <a href="mailto:contact@dahono.com" class="text-brand-primary hover:underline">contact@dahono.com</a>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="py-10 border-t border-white/5 text-center">
+        <p class="text-gray-600 text-sm">&copy; 2025 PT Dahono Consulting Agency. All rights reserved.</p>
+    </footer>
+
+    <script>lucide.createIcons();</script>
+</body>
+</html>

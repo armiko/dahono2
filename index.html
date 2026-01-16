@@ -36,7 +36,8 @@
                         'blob': 'blob 7s infinite',
                         'fade-in': 'fadeIn 1s ease-out forwards',
                         'slide-up': 'slideUp 0.8s ease-out forwards',
-                        'infinite-scroll': 'infinite-scroll 25s linear infinite', // Updated Animation Name
+                        'scroll': 'scroll 40s linear infinite',
+                        'infinite-scroll': 'infinite-scroll 25s linear infinite',
                     },
                     keyframes: {
                         blob: {
@@ -53,7 +54,6 @@
                             '0%': { opacity: '0', transform: 'translateY(20px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' },
                         },
-                        // Updated Keyframe for smoother loop
                         'infinite-scroll': {
                             '0%': { transform: 'translateX(0)' },
                             '100%': { transform: 'translateX(-100%)' },
@@ -152,6 +152,7 @@
             <div class="hidden md:flex items-center gap-8">
                 <a href="#about" class="text-sm font-medium text-gray-400 hover:text-white transition-colors" data-i18n="nav.about">About</a>
                 <a href="#services" class="text-sm font-medium text-gray-400 hover:text-white transition-colors" data-i18n="nav.solutions">Solutions</a>
+                <a href="#legal-ai" class="text-sm font-medium text-gray-400 hover:text-white transition-colors" data-i18n="nav.ai">Legal AI</a>
                 <a href="#pricing" class="text-sm font-medium text-gray-400 hover:text-white transition-colors" data-i18n="nav.pricing">Pricing</a>
                 <a href="#testimonials" class="text-sm font-medium text-gray-400 hover:text-white transition-colors" data-i18n="nav.reviews">Reviews</a>
                 <a href="#contact" class="text-sm font-medium text-gray-400 hover:text-white transition-colors" data-i18n="nav.contact">Contact</a>
@@ -180,6 +181,7 @@
         <div id="mobile-menu" class="hidden fixed top-20 left-0 w-full glass-nav border-b border-white/10 p-6 flex-col gap-6 md:hidden z-40 bg-[#050505]/95 backdrop-blur-xl h-screen">
             <a href="#about" class="text-lg text-gray-300 hover:text-white font-medium" onclick="toggleMobileMenu()" data-i18n="nav.about">About</a>
             <a href="#services" class="text-lg text-gray-300 hover:text-white font-medium" onclick="toggleMobileMenu()" data-i18n="nav.solutions">Solutions</a>
+            <a href="#legal-ai" class="text-lg text-gray-300 hover:text-white font-medium" onclick="toggleMobileMenu()" data-i18n="nav.ai">Legal AI</a>
             <a href="#pricing" class="text-lg text-gray-300 hover:text-white font-medium" onclick="toggleMobileMenu()" data-i18n="nav.pricing">Pricing</a>
             <a href="#testimonials" class="text-lg text-gray-300 hover:text-white font-medium" onclick="toggleMobileMenu()" data-i18n="nav.reviews">Reviews</a>
             <div class="flex items-center justify-between">
@@ -400,6 +402,115 @@
         </div>
     </section>
 
+    <!-- NEW: Dahono Legal AI Spotlight -->
+    <section id="legal-ai" class="py-24 relative overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute inset-0 bg-brand-primary/5"></div>
+        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-primary/20 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3"></div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <!-- Content -->
+                <div>
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-brand-primary/30 bg-brand-primary/10 mb-6">
+                        <i data-lucide="sparkles" class="w-4 h-4 text-brand-primary"></i>
+                        <span class="text-xs font-bold tracking-wide uppercase text-brand-primary" data-i18n="legal_ai.tag">New Product</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                        Dahono Legal AI <br/>
+                        <span class="text-gradient-red" data-i18n="legal_ai.subtitle">Smart Contract Intelligence</span>
+                    </h2>
+                    <p class="text-gray-400 text-lg mb-8 leading-relaxed" data-i18n="legal_ai.desc">
+                        Accelerate your legal workflows with our cutting-edge AI. Instantly audit contracts, identify risks, and ensure compliance with Indonesian regulations in seconds, not days.
+                    </p>
+                    
+                    <div class="space-y-6 mb-10">
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-brand-primary/20 rounded-lg flex items-center justify-center shrink-0">
+                                <i data-lucide="scan-search" class="w-5 h-5 text-brand-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold mb-1" data-i18n="legal_ai.f1_title">Auto-Detect Problematic Clauses</h4>
+                                <p class="text-gray-500 text-sm" data-i18n="legal_ai.f1_desc">Instantly spot hidden liabilities and unfair terms.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-brand-primary/20 rounded-lg flex items-center justify-center shrink-0">
+                                <i data-lucide="shield-alert" class="w-5 h-5 text-brand-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold mb-1" data-i18n="legal_ai.f2_title">Comprehensive Risk Analysis</h4>
+                                <p class="text-gray-500 text-sm" data-i18n="legal_ai.f2_desc">Get a detailed breakdown of potential legal and operational risks.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-brand-primary/20 rounded-lg flex items-center justify-center shrink-0">
+                                <i data-lucide="bot" class="w-5 h-5 text-brand-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold mb-1" data-i18n="legal_ai.f3_title">AI-Powered Suggestions</h4>
+                                <p class="text-gray-500 text-sm" data-i18n="legal_ai.f3_desc">Receive actionable recommendations to improve contract terms.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 bg-brand-primary/20 rounded-lg flex items-center justify-center shrink-0">
+                                <i data-lucide="book-check" class="w-5 h-5 text-brand-primary"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold mb-1" data-i18n="legal_ai.f4_title">Latest Regulatory Compliance</h4>
+                                <p class="text-gray-500 text-sm" data-i18n="legal_ai.f4_desc">Always up-to-date with the newest Indonesian laws.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="https://ai.dahono.com" class="inline-flex items-center gap-2 px-8 py-4 bg-brand-primary hover:bg-red-700 text-white font-bold rounded-full transition-all shadow-lg shadow-brand-primary/25" data-i18n="legal_ai.cta">
+                        Try AI Audit Now <i data-lucide="external-link" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- Visual -->
+                <div class="relative">
+                    <div class="glass-card p-8 rounded-3xl border border-white/10 relative z-10 animate-fade-in">
+                        <!-- Abstract UI Representation of AI Analysis -->
+                        <div class="flex items-center justify-between mb-8 border-b border-white/10 pb-4">
+                            <div class="flex items-center gap-3">
+                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            </div>
+                            <div class="text-xs text-gray-500 font-mono">Dahono AI Engine v2.0</div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="h-4 bg-white/10 rounded w-3/4 animate-pulse"></div>
+                            <div class="h-4 bg-white/10 rounded w-full animate-pulse" style="animation-delay: 0.1s"></div>
+                            <div class="h-4 bg-white/10 rounded w-5/6 animate-pulse" style="animation-delay: 0.2s"></div>
+                            
+                            <!-- Highlighted Risk Box -->
+                            <div class="mt-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30">
+                                <div class="flex items-center gap-2 text-red-400 mb-2">
+                                    <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+                                    <span class="text-xs font-bold uppercase">High Risk Detected</span>
+                                </div>
+                                <p class="text-sm text-gray-300">Clause 4.2 contains ambiguous termination terms.</p>
+                                <div class="mt-3 pt-3 border-t border-red-500/20">
+                                    <p class="text-xs text-brand-primary font-bold mb-1">AI Suggestion:</p>
+                                    <p class="text-xs text-gray-400">Specify notice period to 30 days...</p>
+                                </div>
+                            </div>
+
+                            <div class="h-4 bg-white/10 rounded w-full animate-pulse" style="animation-delay: 0.3s"></div>
+                            <div class="h-4 bg-white/10 rounded w-2/3 animate-pulse" style="animation-delay: 0.4s"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Decorative back elements -->
+                    <div class="absolute -top-10 -right-10 w-full h-full border border-white/5 rounded-3xl -z-10"></div>
+                    <div class="absolute -bottom-10 -left-10 w-full h-full border border-white/5 rounded-3xl -z-10"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Pricing Section (Fixed Grid) -->
     <section id="pricing" class="py-24 relative bg-black/40">
         <div class="max-w-7xl mx-auto px-6">
@@ -419,9 +530,12 @@
                     </div>
                     <div class="mb-6">
                         <p class="text-xs text-gray-500 mb-1" data-i18n="pricing.one_time">One-time fee</p>
-                        <div class="flex items-baseline gap-1">
-                            <span class="text-xl font-bold text-brand-primary">Rp</span>
-                            <span class="text-4xl font-bold text-white">25.000</span>
+                        <div class="flex flex-col">
+                             <span class="text-sm font-bold text-gray-500 line-through decoration-red-500">Rp 25.000</span>
+                             <div class="flex items-baseline gap-1">
+                                <span class="text-xl font-bold text-brand-primary">Rp</span>
+                                <span class="text-4xl font-bold text-white">0</span>
+                            </div>
                         </div>
                     </div>
                     <ul class="space-y-3 mb-8 flex-1">
@@ -442,7 +556,7 @@
                             <span data-i18n="pricing.p1_f4">Latest Regulatory Compliance</span>
                         </li>
                     </ul>
-                    <a href="#contact" class="w-full py-3 rounded-xl border border-white/20 text-white font-semibold text-sm text-center hover:bg-white hover:text-black transition-all" data-i18n="pricing.try_now">Try Now</a>
+                    <a href="https://ai.dahono.com" target="_blank" class="w-full py-3 rounded-xl border border-white/20 text-white font-semibold text-sm text-center hover:bg-white hover:text-black transition-all" data-i18n="pricing.try_now">Try Now</a>
                 </div>
 
                 <!-- Plan 2: Basic Legal Check -->
@@ -853,6 +967,7 @@
                 nav: {
                     about: "About",
                     solutions: "Solutions",
+                    ai: "Legal AI",
                     pricing: "Pricing",
                     reviews: "Reviews",
                     contact: "Contact",
@@ -901,6 +1016,20 @@
                     i3_desc: "Established Enterprises, Holdings, & Multi-National Corps",
                     i4_title: "Retail & E-comm",
                     i4_desc: "Online Stores, Franchises, F&B, & Lifestyle Brands"
+                },
+                legal_ai: {
+                    tag: "New Product",
+                    subtitle: "Smart Contract Intelligence",
+                    desc: "Accelerate your legal workflows with our cutting-edge AI. Instantly audit contracts, identify risks, and ensure compliance with Indonesian regulations in seconds, not days.",
+                    f1_title: "Auto-Detect Problematic Clauses",
+                    f1_desc: "Instantly spot hidden liabilities and unfair terms.",
+                    f2_title: "Comprehensive Risk Analysis",
+                    f2_desc: "Get a detailed breakdown of potential legal and operational risks.",
+                    f3_title: "AI-Powered Suggestions",
+                    f3_desc: "Receive actionable recommendations to improve contract terms.",
+                    f4_title: "Latest Regulatory Compliance",
+                    f4_desc: "Always up-to-date with the newest Indonesian laws.",
+                    cta: "Try AI Audit Now"
                 },
                 pricing: {
                     tag: "Flexible Plans",
@@ -1000,6 +1129,7 @@
                 nav: {
                     about: "Tentang",
                     solutions: "Solusi",
+                    ai: "Legal AI",
                     pricing: "Harga",
                     reviews: "Ulasan",
                     contact: "Kontak",
@@ -1048,6 +1178,20 @@
                     i3_desc: "Perusahaan Mapan, Holdings, & Korporasi Multinasional",
                     i4_title: "Ritel & E-comm",
                     i4_desc: "Toko Online, Waralaba, F&B, & Merek Gaya Hidup"
+                },
+                legal_ai: {
+                    tag: "Produk Baru",
+                    subtitle: "Kecerdasan Kontrak Cerdas",
+                    desc: "Percepat alur kerja hukum Anda dengan AI mutakhir kami. Audit kontrak secara instan, identifikasi risiko, dan pastikan kepatuhan terhadap peraturan Indonesia dalam hitungan detik, bukan hari.",
+                    f1_title: "Deteksi Otomatis Klausul Bermasalah",
+                    f1_desc: "Temukan kewajiban tersembunyi dan ketentuan tidak adil secara instan.",
+                    f2_title: "Analisis Risiko Komprehensif",
+                    f2_desc: "Dapatkan rincian potensi risiko hukum dan operasional.",
+                    f3_title: "Saran Berbasis AI",
+                    f3_desc: "Terima rekomendasi yang dapat ditindaklanjuti untuk memperbaiki ketentuan kontrak.",
+                    f4_title: "Kepatuhan Regulasi Terkini",
+                    f4_desc: "Selalu terupdate dengan hukum Indonesia terbaru.",
+                    cta: "Coba Audit AI Sekarang"
                 },
                 pricing: {
                     tag: "Paket Fleksibel",

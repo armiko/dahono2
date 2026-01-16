@@ -27,7 +27,7 @@
                     },
                     colors: {
                         brand: {
-                            primary: '#DC2626', // Updated to Red
+                            primary: '#DC2626', // Red
                             dark: '#050505',
                             card: '#0F0F0F'
                         }
@@ -36,7 +36,7 @@
                         'blob': 'blob 7s infinite',
                         'fade-in': 'fadeIn 1s ease-out forwards',
                         'slide-up': 'slideUp 0.8s ease-out forwards',
-                        'scroll': 'scroll 40s linear infinite',
+                        'infinite-scroll': 'infinite-scroll 25s linear infinite', // Updated Animation Name
                     },
                     keyframes: {
                         blob: {
@@ -53,9 +53,10 @@
                             '0%': { opacity: '0', transform: 'translateY(20px)' },
                             '100%': { opacity: '1', transform: 'translateY(0)' },
                         },
-                        scroll: {
+                        // Updated Keyframe for smoother loop
+                        'infinite-scroll': {
                             '0%': { transform: 'translateX(0)' },
-                            '100%': { transform: 'translateX(-50%)' },
+                            '100%': { transform: 'translateX(-100%)' },
                         }
                     }
                 }
@@ -108,6 +109,30 @@
             mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
             -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
+
+        /* Hide Scrollbar for Horizontal Scroll */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+
+        /* FAQ Details Animation */
+        details > summary {
+            list-style: none;
+        }
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+        details[open] summary ~ * {
+            animation: sweep .3s ease-in-out;
+        }
+        @keyframes sweep {
+            0%    {opacity: 0; transform: translateY(-10px)}
+            100%  {opacity: 1; transform: translateY(0)}
+        }
     </style>
 </head>
 <body class="antialiased selection:bg-brand-primary selection:text-white">
@@ -125,14 +150,22 @@
 
             <!-- Desktop Menu -->
             <div class="hidden md:flex items-center gap-8">
-                <a href="#about" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">About</a>
-                <a href="#services" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">Solutions</a>
-                <a href="#community" class="text-sm font-medium text-gray-400 hover:text-white transition-colors">Partner With Us</a>
+                <a href="#about" class="text-sm font-medium text-gray-400 hover:text-white transition-colors" data-i18n="nav.about">About</a>
+                <a href="#services" class="text-sm font-medium text-gray-400 hover:text-white transition-colors" data-i18n="nav.solutions">Solutions</a>
+                <a href="#pricing" class="text-sm font-medium text-gray-400 hover:text-white transition-colors" data-i18n="nav.pricing">Pricing</a>
+                <a href="#testimonials" class="text-sm font-medium text-gray-400 hover:text-white transition-colors" data-i18n="nav.reviews">Reviews</a>
+                <a href="#contact" class="text-sm font-medium text-gray-400 hover:text-white transition-colors" data-i18n="nav.contact">Contact</a>
+                
+                <!-- Language Switcher (Desktop) -->
+                <button onclick="toggleLanguage()" class="flex items-center gap-1 text-sm font-semibold text-white bg-white/10 px-3 py-1 rounded-full hover:bg-white/20 transition-all border border-white/5">
+                    <i data-lucide="globe" class="w-3 h-3"></i>
+                    <span id="lang-label-desktop">ID</span>
+                </button>
             </div>
 
             <!-- CTA Button -->
             <div class="hidden md:block">
-                <a href="mailto:contact@dahono.com" class="px-5 py-2.5 text-sm font-semibold text-black bg-white rounded-full hover:bg-gray-200 transition-all transform hover:scale-105">
+                <a href="#contact" class="px-5 py-2.5 text-sm font-semibold text-black bg-white rounded-full hover:bg-gray-200 transition-all transform hover:scale-105" data-i18n="nav.connect">
                     Connect With Us
                 </a>
             </div>
@@ -145,12 +178,20 @@
 
         <!-- Mobile Menu Overlay -->
         <div id="mobile-menu" class="hidden fixed top-20 left-0 w-full glass-nav border-b border-white/10 p-6 flex-col gap-6 md:hidden z-40 bg-[#050505]/95 backdrop-blur-xl h-screen">
-            <a href="#about" class="text-lg text-gray-300 hover:text-white font-medium" onclick="toggleMobileMenu()">About</a>
-            <a href="#services" class="text-lg text-gray-300 hover:text-white font-medium" onclick="toggleMobileMenu()">Solutions</a>
-            <a href="#community" class="text-lg text-gray-300 hover:text-white font-medium" onclick="toggleMobileMenu()">Partner With Us</a>
-            <a href="mailto:contact@dahono.com" class="text-lg text-brand-primary font-bold flex items-center gap-2">
-                Contact Us <i data-lucide="arrow-right" class="w-4 h-4"></i>
-            </a>
+            <a href="#about" class="text-lg text-gray-300 hover:text-white font-medium" onclick="toggleMobileMenu()" data-i18n="nav.about">About</a>
+            <a href="#services" class="text-lg text-gray-300 hover:text-white font-medium" onclick="toggleMobileMenu()" data-i18n="nav.solutions">Solutions</a>
+            <a href="#pricing" class="text-lg text-gray-300 hover:text-white font-medium" onclick="toggleMobileMenu()" data-i18n="nav.pricing">Pricing</a>
+            <a href="#testimonials" class="text-lg text-gray-300 hover:text-white font-medium" onclick="toggleMobileMenu()" data-i18n="nav.reviews">Reviews</a>
+            <div class="flex items-center justify-between">
+                 <a href="#contact" class="text-lg text-brand-primary font-bold flex items-center gap-2" onclick="toggleMobileMenu()">
+                    <span data-i18n="nav.contact_us">Contact Us</span> <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </a>
+                <!-- Language Switcher (Mobile) -->
+                <button onclick="toggleLanguage()" class="flex items-center gap-2 text-sm font-semibold text-white bg-white/10 px-4 py-2 rounded-full hover:bg-white/20 transition-all">
+                    <i data-lucide="globe" class="w-4 h-4"></i>
+                    <span id="lang-label-mobile">Bahasa Indonesia</span>
+                </button>
+            </div>
         </div>
     </nav>
 
@@ -166,88 +207,97 @@
             <!-- Tag -->
             <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 mb-8 animate-fade-in">
                 <span class="w-2 h-2 rounded-full bg-brand-primary animate-pulse"></span>
-                <span class="text-xs font-medium tracking-wide uppercase text-gray-300">Corporate & Creative Solutions</span>
+                <span class="text-xs font-medium tracking-wide uppercase text-gray-300" data-i18n="hero.tag">Corporate & Creative Solutions</span>
             </div>
 
             <!-- Headline -->
             <h1 class="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 animate-slide-up leading-tight md:leading-[1.1]">
-                Trusted Management <br class="hidden sm:block"/>
-                <span class="text-gradient-red">& Legal Partners</span>
+                <span data-i18n="hero.headline_1">Trusted Management</span> <br class="hidden sm:block"/>
+                <span class="text-gradient-red" data-i18n="hero.headline_2">& Legal Partners</span>
             </h1>
 
             <!-- Subheadline -->
-            <p class="text-base sm:text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10 animate-slide-up px-4" style="animation-delay: 0.1s;">
+            <p class="text-base sm:text-lg md:text-xl text-gray-400 max-w-2xl mx-auto mb-10 animate-slide-up px-4" style="animation-delay: 0.1s;" data-i18n="hero.subheadline">
                 Empowering businesses and creators alike. We provide expert legal consultancy and management strategies to ensure growth, protection, and operational success.
             </p>
 
             <!-- Buttons -->
             <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-slide-up px-4" style="animation-delay: 0.2s;">
-                <a href="#services" class="w-full sm:w-auto px-8 py-4 bg-brand-primary hover:bg-red-700 text-white font-semibold rounded-full transition-all text-center">
-                    Explore Services
+                <a href="#pricing" class="w-full sm:w-auto px-8 py-4 bg-brand-primary hover:bg-red-700 text-white font-semibold rounded-full transition-all text-center" data-i18n="hero.btn_primary">
+                    See Plans
                 </a>
                 <a href="#about" class="w-full sm:w-auto px-8 py-4 bg-white/5 border border-white/10 hover:bg-white/10 text-white font-semibold rounded-full backdrop-blur-sm transition-all flex items-center justify-center gap-2">
-                    Why Dahono? <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    <span data-i18n="hero.btn_secondary">Why Dahono?</span> <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </a>
             </div>
 
-            <!-- Client Logos -->
+            <!-- Client Logos (FIXED INFINITE LOOP) -->
             <div class="mt-24 border-t border-white/5 pt-10 animate-slide-up px-4" style="animation-delay: 0.3s;">
-                <p class="text-xs text-gray-500 font-semibold tracking-widest uppercase mb-8">Trusted by Leaders & Innovators</p>
+                <p class="text-xs text-gray-500 font-semibold tracking-widest uppercase mb-8" data-i18n="hero.trusted_by">Trusted by Leaders & Innovators</p>
                 
                 <div class="relative w-full max-w-5xl mx-auto overflow-hidden mask-linear">
-                    <div class="flex w-max gap-16 animate-scroll items-center">
-                        <!-- Logos - Set 1 -->
-                        <img src="https://framerusercontent.com/images/O5G4HZMNj39No18BMtCtv2kU4Yg.png" alt="Client Logo" class="h-10 md:h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
-                        <img src="https://framerusercontent.com/images/WXSchTXPksG98FKip9w3BrL0Yk.png" alt="Client Logo" class="h-10 md:h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
-                        <img src="https://framerusercontent.com/images/9AoYrpUVOEz8A3XFGZdLm5AIso.png" alt="Client Logo" class="h-10 md:h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
-                        <img src="https://framerusercontent.com/images/LEft60ybEOU7ByICn7oO1XLmmBw.png" alt="Client Logo" class="h-10 md:h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
-                        
-                        <!-- Logos - Set 2 (Repeat for fill) -->
-                        <img src="https://framerusercontent.com/images/O5G4HZMNj39No18BMtCtv2kU4Yg.png" alt="Client Logo" class="h-10 md:h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
-                        <img src="https://framerusercontent.com/images/WXSchTXPksG98FKip9w3BrL0Yk.png" alt="Client Logo" class="h-10 md:h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
-                        <img src="https://framerusercontent.com/images/9AoYrpUVOEz8A3XFGZdLm5AIso.png" alt="Client Logo" class="h-10 md:h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
-                        <img src="https://framerusercontent.com/images/LEft60ybEOU7ByICn7oO1XLmmBw.png" alt="Client Logo" class="h-10 md:h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
-
-                        <!-- Logos - Set 3 (Repeat for fill) -->
-                        <img src="https://framerusercontent.com/images/O5G4HZMNj39No18BMtCtv2kU4Yg.png" alt="Client Logo" class="h-10 md:h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
-                        <img src="https://framerusercontent.com/images/WXSchTXPksG98FKip9w3BrL0Yk.png" alt="Client Logo" class="h-10 md:h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
-                        <img src="https://framerusercontent.com/images/9AoYrpUVOEz8A3XFGZdLm5AIso.png" alt="Client Logo" class="h-10 md:h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
-                        <img src="https://framerusercontent.com/images/LEft60ybEOU7ByICn7oO1XLmmBw.png" alt="Client Logo" class="h-10 md:h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
-
-                        <!-- Logos - Set 4 (Repeat for fill) -->
-                        <img src="https://framerusercontent.com/images/O5G4HZMNj39No18BMtCtv2kU4Yg.png" alt="Client Logo" class="h-10 md:h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
-                        <img src="https://framerusercontent.com/images/WXSchTXPksG98FKip9w3BrL0Yk.png" alt="Client Logo" class="h-10 md:h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
-                        <img src="https://framerusercontent.com/images/9AoYrpUVOEz8A3XFGZdLm5AIso.png" alt="Client Logo" class="h-10 md:h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
-                        <img src="https://framerusercontent.com/images/LEft60ybEOU7ByICn7oO1XLmmBw.png" alt="Client Logo" class="h-10 md:h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
+                    <div class="flex w-max gap-16 group">
+                        <!-- Container 1 -->
+                        <div class="flex gap-16 animate-infinite-scroll group-hover:paused">
+                            <img src="https://framerusercontent.com/images/O5G4HZMNj39No18BMtCtv2kU4Yg.png" alt="Client Logo" class="h-10 md:h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
+                            <img src="https://framerusercontent.com/images/WXSchTXPksG98FKip9w3BrL0Yk.png" alt="Client Logo" class="h-10 md:h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
+                            <img src="https://framerusercontent.com/images/9AoYrpUVOEz8A3XFGZdLm5AIso.png" alt="Client Logo" class="h-10 md:h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
+                            <img src="https://framerusercontent.com/images/LEft60ybEOU7ByICn7oO1XLmmBw.png" alt="Client Logo" class="h-10 md:h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
+                            <img src="https://framerusercontent.com/images/O5G4HZMNj39No18BMtCtv2kU4Yg.png" alt="Client Logo" class="h-10 md:h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
+                            <img src="https://framerusercontent.com/images/WXSchTXPksG98FKip9w3BrL0Yk.png" alt="Client Logo" class="h-10 md:h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
+                        </div>
+                        <!-- Container 2 (Duplicate for Seamless Loop) -->
+                        <div class="flex gap-16 animate-infinite-scroll group-hover:paused" aria-hidden="true">
+                            <img src="https://framerusercontent.com/images/O5G4HZMNj39No18BMtCtv2kU4Yg.png" alt="Client Logo" class="h-10 md:h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
+                            <img src="https://framerusercontent.com/images/WXSchTXPksG98FKip9w3BrL0Yk.png" alt="Client Logo" class="h-10 md:h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
+                            <img src="https://framerusercontent.com/images/9AoYrpUVOEz8A3XFGZdLm5AIso.png" alt="Client Logo" class="h-10 md:h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
+                            <img src="https://framerusercontent.com/images/LEft60ybEOU7ByICn7oO1XLmmBw.png" alt="Client Logo" class="h-10 md:h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
+                             <img src="https://framerusercontent.com/images/O5G4HZMNj39No18BMtCtv2kU4Yg.png" alt="Client Logo" class="h-10 md:h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
+                            <img src="https://framerusercontent.com/images/WXSchTXPksG98FKip9w3BrL0Yk.png" alt="Client Logo" class="h-10 md:h-14 w-auto object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- About / Bridge Section -->
-    <section id="about" class="py-16 md:py-24 relative border-t border-white/5">
+    <!-- Stats Section -->
+    <section class="border-y border-white/5 bg-brand-card/50 backdrop-blur-sm">
+        <div class="max-w-7xl mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-white/5">
+                <div class="px-4 py-2">
+                    <p class="text-3xl md:text-4xl font-bold text-white mb-2">50+</p>
+                    <p class="text-gray-400 text-sm uppercase tracking-wide" data-i18n="stats.clients">Corporate Clients</p>
+                </div>
+                <div class="px-4 py-2">
+                    <p class="text-3xl md:text-4xl font-bold text-white mb-2">5+</p>
+                    <p class="text-gray-400 text-sm uppercase tracking-wide" data-i18n="stats.years">Years Experience</p>
+                </div>
+                <div class="px-4 py-2">
+                    <p class="text-3xl md:text-4xl font-bold text-white mb-2">98%</p>
+                    <p class="text-gray-400 text-sm uppercase tracking-wide" data-i18n="stats.success">Success Rate</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 md:py-24 relative">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                
-                <!-- Text Content -->
                 <div class="order-2 lg:order-1">
                     <h2 class="text-3xl md:text-5xl font-bold mb-6">
-                        Bridging <span class="text-gradient">innovation and compliance</span> for modern enterprises.
+                        <span data-i18n="about.title_1">Bridging</span> <span class="text-gradient" data-i18n="about.title_2">innovation and compliance</span> <span data-i18n="about.title_3">for modern enterprises.</span>
                     </h2>
-                    <p class="text-gray-400 text-base md:text-lg mb-6 leading-relaxed">
+                    <p class="text-gray-400 text-base md:text-lg mb-6 leading-relaxed" data-i18n="about.desc_1">
                         Whether you are a scaling startup, an established corporation, or a high-impact creator, the foundation of success lies in solid management and legal security.
                     </p>
-                    <p class="text-gray-400 text-base md:text-lg leading-relaxed">
+                    <p class="text-gray-400 text-base md:text-lg leading-relaxed" data-i18n="about.desc_2">
                         Dahono goes beyond traditional consultancy. We create an ecosystem where businesses can operate efficiently and talents can thrive, all while ensuring full legal protection and regulatory compliance.
                     </p>
                 </div>
-
-                <!-- Abstract Visual -->
                 <div class="order-1 lg:order-2 relative h-[300px] md:h-[400px] w-full glass-card rounded-2xl overflow-hidden flex items-center justify-center group">
                     <div class="absolute inset-0 bg-gradient-to-br from-brand-primary/20 to-transparent opacity-50 group-hover:opacity-100 transition-opacity duration-500"></div>
-                    
-                    <!-- Abstract Circles representing connection -->
                     <div class="relative z-10 grid grid-cols-2 gap-4">
                         <div class="w-24 h-24 md:w-32 md:h-32 rounded-full border border-white/20 flex items-center justify-center backdrop-blur-md">
                             <i data-lucide="building-2" class="w-8 h-8 md:w-10 md:h-10 text-white/80"></i>
@@ -261,45 +311,43 @@
         </div>
     </section>
 
-    <!-- Services / Values -->
+    <!-- Services Section -->
     <section id="services" class="py-16 md:py-24 bg-brand-card relative">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-12 md:mb-16">
-                <span class="text-brand-primary font-semibold tracking-wider uppercase text-sm">Our Expertise</span>
-                <h2 class="text-3xl md:text-4xl font-bold mt-2">Comprehensive Corporate Solutions</h2>
+                <span class="text-brand-primary font-semibold tracking-wider uppercase text-sm" data-i18n="services.tag">Our Expertise</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2" data-i18n="services.title">Comprehensive Corporate Solutions</h2>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-                <!-- Card 1: Regulatory Compliance (was Growth) -->
+                <!-- Card 1 -->
                 <div class="glass-card p-8 rounded-2xl hover:border-brand-primary/50 transition-colors duration-300 group">
                     <div class="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center mb-6 text-brand-primary group-hover:bg-brand-primary group-hover:text-white transition-all">
                         <i data-lucide="file-check"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">Regulatory Compliance</h3>
-                    <p class="text-gray-400 leading-relaxed">
+                    <h3 class="text-xl font-bold mb-4" data-i18n="services.c1_title">Regulatory Compliance</h3>
+                    <p class="text-gray-400 leading-relaxed" data-i18n="services.c1_desc">
                         Ensuring your business operations adhere to local laws, obtaining necessary permits, and mitigating risks through strict regulatory adherence.
                     </p>
                 </div>
-
-                <!-- Card 2: Legal (Core Value) -->
+                <!-- Card 2 -->
                 <div class="glass-card p-8 rounded-2xl hover:border-brand-primary/50 transition-colors duration-300 group relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-20 h-20 bg-brand-primary/10 blur-[40px]"></div>
                     <div class="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center mb-6 text-brand-primary group-hover:bg-brand-primary group-hover:text-white transition-all">
                         <i data-lucide="gavel"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">Corporate Law & IP</h3>
-                    <p class="text-gray-400 leading-relaxed">
+                    <h3 class="text-xl font-bold mb-4" data-i18n="services.c2_title">Corporate Law & IP</h3>
+                    <p class="text-gray-400 leading-relaxed" data-i18n="services.c2_desc">
                         Comprehensive legal support including contract drafting, intellectual property protection, regulatory compliance, and dispute resolution.
                     </p>
                 </div>
-
-                <!-- Card 3: Management -->
+                <!-- Card 3 -->
                 <div class="glass-card p-8 rounded-2xl hover:border-brand-primary/50 transition-colors duration-300 group">
                     <div class="w-12 h-12 bg-white/5 rounded-lg flex items-center justify-center mb-6 text-brand-primary group-hover:bg-brand-primary group-hover:text-white transition-all">
                         <i data-lucide="users"></i>
                     </div>
-                    <h3 class="text-xl font-bold mb-4">Management Consultancy</h3>
-                    <p class="text-gray-400 leading-relaxed">
+                    <h3 class="text-xl font-bold mb-4" data-i18n="services.c3_title">Management Consultancy</h3>
+                    <p class="text-gray-400 leading-relaxed" data-i18n="services.c3_desc">
                         End-to-end management support for organizations. From HR advisory to talent coordination and leadership consulting.
                     </p>
                 </div>
@@ -307,20 +355,414 @@
         </div>
     </section>
 
-    <!-- Community / Stats Section (Visual Interest) -->
-    <section id="community" class="py-16 md:py-20 border-y border-white/5">
-        <div class="max-w-7xl mx-auto px-4 md:px-6">
-            <div class="glass-card rounded-3xl p-8 md:p-16 text-center relative overflow-hidden">
-                <div class="absolute inset-0 bg-gradient-to-r from-red-900/20 to-orange-900/20"></div>
-                <div class="relative z-10">
-                    <h2 class="text-2xl md:text-4xl font-bold mb-6">Ready to secure your business future?</h2>
-                    <p class="text-gray-300 mb-8 max-w-2xl mx-auto text-base md:text-lg">
-                        Join the forward-thinking companies and creators who trust Dahono for their management and legal infrastructure.
-                    </p>
-                    <a href="mailto:armiko@dahono.com" class="inline-flex items-center gap-2 px-8 py-4 bg-white text-black font-bold rounded-full hover:bg-gray-100 transition-all w-full sm:w-auto justify-center">
-                        <i data-lucide="mail" class="w-4 h-4"></i> Partner With Us
-                    </a>
+    <!-- Industries Section -->
+    <section id="industries" class="py-20 border-t border-white/5 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-brand-primary font-semibold tracking-wider uppercase text-sm" data-i18n="industries.tag">Who We Serve</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2" data-i18n="industries.title">Specialized Industry Focus</h2>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                <!-- Industry 1 -->
+                <div class="group relative p-6 rounded-2xl bg-white/5 hover:bg-white/10 transition-all border border-white/5 hover:border-brand-primary/50 flex flex-col items-center text-center">
+                    <div class="w-14 h-14 bg-black/50 rounded-full flex items-center justify-center mb-4 text-brand-primary group-hover:scale-110 transition-transform shadow-lg shadow-black/50">
+                        <i data-lucide="video" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2" data-i18n="industries.i1_title">Creative & Media</h3>
+                    <p class="text-xs text-gray-400 leading-snug" data-i18n="industries.i1_desc">Content Creators, VTubers, Production Houses & Agencies</p>
                 </div>
+                <!-- Industry 2 -->
+                <div class="group relative p-6 rounded-2xl bg-white/5 hover:bg-white/10 transition-all border border-white/5 hover:border-brand-primary/50 flex flex-col items-center text-center">
+                    <div class="w-14 h-14 bg-black/50 rounded-full flex items-center justify-center mb-4 text-brand-primary group-hover:scale-110 transition-transform shadow-lg shadow-black/50">
+                        <i data-lucide="rocket" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2" data-i18n="industries.i2_title">Tech & Startups</h3>
+                    <p class="text-xs text-gray-400 leading-snug" data-i18n="industries.i2_desc">SaaS Companies, Fintech, Digital Platforms & Apps</p>
+                </div>
+                <!-- Industry 3 -->
+                <div class="group relative p-6 rounded-2xl bg-white/5 hover:bg-white/10 transition-all border border-white/5 hover:border-brand-primary/50 flex flex-col items-center text-center">
+                    <div class="w-14 h-14 bg-black/50 rounded-full flex items-center justify-center mb-4 text-brand-primary group-hover:scale-110 transition-transform shadow-lg shadow-black/50">
+                        <i data-lucide="building" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2" data-i18n="industries.i3_title">Corporate</h3>
+                    <p class="text-xs text-gray-400 leading-snug" data-i18n="industries.i3_desc">Established Enterprises, Holdings, & Multi-National Corps</p>
+                </div>
+                <!-- Industry 4 -->
+                <div class="group relative p-6 rounded-2xl bg-white/5 hover:bg-white/10 transition-all border border-white/5 hover:border-brand-primary/50 flex flex-col items-center text-center">
+                    <div class="w-14 h-14 bg-black/50 rounded-full flex items-center justify-center mb-4 text-brand-primary group-hover:scale-110 transition-transform shadow-lg shadow-black/50">
+                        <i data-lucide="shopping-bag" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-2" data-i18n="industries.i4_title">Retail & E-comm</h3>
+                    <p class="text-xs text-gray-400 leading-snug" data-i18n="industries.i4_desc">Online Stores, Franchises, F&B, & Lifestyle Brands</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section (Fixed Grid) -->
+    <section id="pricing" class="py-24 relative bg-black/40">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="text-brand-primary font-semibold tracking-wider uppercase text-sm" data-i18n="pricing.tag">Flexible Plans</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2" data-i18n="pricing.title">Solutions for Every Stage</h2>
+                <p class="text-gray-400 mt-4 max-w-2xl mx-auto" data-i18n="pricing.desc">Transparent pricing tailored to your needs. Whether you're just starting or scaling up, we have a plan for you.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 items-start">
+                
+                <!-- Plan 1: AI Contract Audit -->
+                <div class="glass-card p-6 rounded-3xl border border-white/10 hover:border-brand-primary/50 transition-all group flex flex-col h-full">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold text-white mb-2" data-i18n="pricing.p1_title">AI Contract Audit</h3>
+                        <p class="text-gray-400 text-xs h-8" data-i18n="pricing.p1_desc">Instant automated analysis for quick peace of mind.</p>
+                    </div>
+                    <div class="mb-6">
+                        <p class="text-xs text-gray-500 mb-1" data-i18n="pricing.one_time">One-time fee</p>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-xl font-bold text-brand-primary">Rp</span>
+                            <span class="text-4xl font-bold text-white">25.000</span>
+                        </div>
+                    </div>
+                    <ul class="space-y-3 mb-8 flex-1">
+                        <li class="flex items-start gap-3 text-gray-300 text-xs">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-primary shrink-0 mt-0.5"></i>
+                            <span data-i18n="pricing.p1_f1">Auto-Detect Problematic Clauses</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-300 text-xs">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-primary shrink-0 mt-0.5"></i>
+                            <span data-i18n="pricing.p1_f2">Comprehensive Risk Analysis</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-300 text-xs">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-primary shrink-0 mt-0.5"></i>
+                            <span data-i18n="pricing.p1_f3">AI-Powered Suggestions</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-300 text-xs">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-primary shrink-0 mt-0.5"></i>
+                            <span data-i18n="pricing.p1_f4">Latest Regulatory Compliance</span>
+                        </li>
+                    </ul>
+                    <a href="#contact" class="w-full py-3 rounded-xl border border-white/20 text-white font-semibold text-sm text-center hover:bg-white hover:text-black transition-all" data-i18n="pricing.try_now">Try Now</a>
+                </div>
+
+                <!-- Plan 2: Basic Legal Check -->
+                <div class="glass-card p-6 rounded-3xl border border-white/10 hover:border-brand-primary/50 transition-all group flex flex-col h-full">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold text-white mb-2" data-i18n="pricing.p2_title">Basic Legal Check</h3>
+                        <p class="text-gray-400 text-xs h-8" data-i18n="pricing.p2_desc">Expert human review to validate specific documents.</p>
+                    </div>
+                    <div class="mb-6">
+                        <p class="text-xs text-gray-500 mb-1" data-i18n="pricing.per_doc">Per document/session</p>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-xl font-bold text-brand-primary">Rp</span>
+                            <span class="text-4xl font-bold text-white">100.000</span>
+                        </div>
+                    </div>
+                    <ul class="space-y-3 mb-8 flex-1">
+                        <li class="flex items-start gap-3 text-gray-300 text-xs">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-primary shrink-0 mt-0.5"></i>
+                            <span data-i18n="pricing.p2_f1">Verified by Legal Consultant</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-300 text-xs">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-primary shrink-0 mt-0.5"></i>
+                            <span data-i18n="pricing.p2_f2">Specific Clause Explanation</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-300 text-xs">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-primary shrink-0 mt-0.5"></i>
+                            <span data-i18n="pricing.p2_f3">Direct Q&A Session (Chat)</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-300 text-xs">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-primary shrink-0 mt-0.5"></i>
+                            <span data-i18n="pricing.p2_f4">Actionable Advice</span>
+                        </li>
+                    </ul>
+                    <a href="#contact" class="w-full py-3 rounded-xl border border-white/20 text-white font-semibold text-sm text-center hover:bg-white hover:text-black transition-all" data-i18n="pricing.get_verified">Get Verified</a>
+                </div>
+
+                <!-- Plan 3: Business Growth -->
+                <div class="glass-card p-6 rounded-3xl border border-brand-primary relative flex flex-col bg-brand-primary/5 h-full">
+                    <div class="absolute top-0 right-0 bg-brand-primary text-white text-[10px] font-bold px-3 py-1 rounded-bl-xl rounded-tr-xl">POPULAR</div>
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold text-white mb-2" data-i18n="pricing.p3_title">Business Growth</h3>
+                        <p class="text-gray-400 text-xs h-8" data-i18n="pricing.p3_desc">Comprehensive support for growing entities.</p>
+                    </div>
+                    <div class="mb-6">
+                        <p class="text-xs text-gray-500 mb-1" data-i18n="pricing.starting">Starting from</p>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-xl font-bold text-brand-primary">Rp</span>
+                            <span class="text-4xl font-bold text-white">2.500k</span>
+                        </div>
+                    </div>
+                    <ul class="space-y-3 mb-8 flex-1">
+                        <li class="flex items-start gap-3 text-white text-xs">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-primary shrink-0 mt-0.5"></i>
+                            <span data-i18n="pricing.p3_f1">Full Operational Audit</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-white text-xs">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-primary shrink-0 mt-0.5"></i>
+                            <span data-i18n="pricing.p3_f2">Contract Drafting & Review</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-white text-xs">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-primary shrink-0 mt-0.5"></i>
+                            <span data-i18n="pricing.p3_f3">Monthly Management Report</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-white text-xs">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-primary shrink-0 mt-0.5"></i>
+                            <span data-i18n="pricing.p3_f4">Priority Support</span>
+                        </li>
+                    </ul>
+                    <a href="#contact" class="w-full py-3 rounded-xl bg-brand-primary text-white font-semibold text-sm text-center hover:bg-red-700 transition-all shadow-lg shadow-brand-primary/25" data-i18n="pricing.choose">Choose Plan</a>
+                </div>
+
+                <!-- Plan 4: Corporate Suite -->
+                <div class="glass-card p-6 rounded-3xl border border-white/10 hover:border-brand-primary/50 transition-all group flex flex-col h-full">
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold text-white mb-2" data-i18n="pricing.p4_title">Corporate Suite</h3>
+                        <p class="text-gray-400 text-xs h-8" data-i18n="pricing.p4_desc">Tailored solutions for large-scale operations.</p>
+                    </div>
+                    <div class="mb-6">
+                        <p class="text-xs text-gray-500 mb-1" data-i18n="pricing.custom">Custom Pricing</p>
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-3xl font-bold text-white" data-i18n="pricing.contact_sales_price">Contact Us</span>
+                        </div>
+                    </div>
+                    <ul class="space-y-3 mb-8 flex-1">
+                        <li class="flex items-start gap-3 text-gray-300 text-xs">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-primary shrink-0 mt-0.5"></i>
+                            <span data-i18n="pricing.p4_f1">Dedicated Legal Team</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-300 text-xs">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-primary shrink-0 mt-0.5"></i>
+                            <span data-i18n="pricing.p4_f2">Crisis Management & PR</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-300 text-xs">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-primary shrink-0 mt-0.5"></i>
+                            <span data-i18n="pricing.p4_f3">International Expansion Strategy</span>
+                        </li>
+                        <li class="flex items-start gap-3 text-gray-300 text-xs">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-brand-primary shrink-0 mt-0.5"></i>
+                            <span data-i18n="pricing.p4_f4">24/7 Advisory Access</span>
+                        </li>
+                    </ul>
+                    <a href="#contact" class="w-full py-3 rounded-xl border border-white/20 text-white font-semibold text-sm text-center hover:bg-white hover:text-black transition-all" data-i18n="pricing.contact_sales_btn">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="process" class="py-24 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-16">
+                <span class="text-brand-primary font-semibold tracking-wider uppercase text-sm" data-i18n="process.tag">How We Work</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2" data-i18n="process.title">A Seamless Path to Success</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="relative group">
+                    <div class="w-12 h-12 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center mb-6 text-xl font-bold group-hover:bg-brand-primary group-hover:border-brand-primary transition-all">1</div>
+                    <h3 class="text-lg font-bold mb-3" data-i18n="process.s1_title">Discovery & Audit</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed" data-i18n="process.s1_desc">We analyze your current structure, identifying legal risks and operational bottlenecks.</p>
+                </div>
+                <div class="relative group">
+                    <div class="w-12 h-12 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center mb-6 text-xl font-bold group-hover:bg-brand-primary group-hover:border-brand-primary transition-all">2</div>
+                    <h3 class="text-lg font-bold mb-3" data-i18n="process.s2_title">Strategic Planning</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed" data-i18n="process.s2_desc">Our experts develop a tailored roadmap for legal compliance and management efficiency.</p>
+                </div>
+                <div class="relative group">
+                    <div class="w-12 h-12 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center mb-6 text-xl font-bold group-hover:bg-brand-primary group-hover:border-brand-primary transition-all">3</div>
+                    <h3 class="text-lg font-bold mb-3" data-i18n="process.s3_title">Implementation</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed" data-i18n="process.s3_desc">We execute the strategy, handling contracts, licensing, and operational restructuring.</p>
+                </div>
+                <div class="relative group">
+                    <div class="w-12 h-12 bg-white/5 border border-white/10 rounded-xl flex items-center justify-center mb-6 text-xl font-bold group-hover:bg-brand-primary group-hover:border-brand-primary transition-all">4</div>
+                    <h3 class="text-lg font-bold mb-3" data-i18n="process.s4_title">Ongoing Support</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed" data-i18n="process.s4_desc">Continuous monitoring and advisory to ensure your business stays compliant as it grows.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20 border-t border-white/5 relative group">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-2" data-i18n="testimonials.title">Trusted by the Best</h2>
+                    <p class="text-gray-400" data-i18n="testimonials.desc">Hear from the businesses and creators we've helped grow.</p>
+                </div>
+                <div class="flex items-center gap-2 mt-4 md:mt-0 text-yellow-500">
+                    <i data-lucide="star" class="fill-current w-5 h-5"></i>
+                    <i data-lucide="star" class="fill-current w-5 h-5"></i>
+                    <i data-lucide="star" class="fill-current w-5 h-5"></i>
+                    <i data-lucide="star" class="fill-current w-5 h-5"></i>
+                    <i data-lucide="star" class="fill-current w-5 h-5"></i>
+                    <span class="text-white ml-2 text-sm font-medium" data-i18n="testimonials.rated">Top Rated Agency</span>
+                </div>
+            </div>
+
+            <div class="relative">
+                <button id="prevTestimonial" class="absolute left-[-20px] top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-brand-dark/80 border border-white/10 rounded-full flex items-center justify-center text-white hover:bg-brand-primary hover:border-brand-primary transition-all hidden md:flex opacity-0 group-hover:opacity-100 duration-300">
+                    <i data-lucide="chevron-left" class="w-6 h-6"></i>
+                </button>
+                
+                <div id="testimonialContainer" class="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 no-scrollbar scroll-smooth">
+                    <div class="min-w-[300px] md:min-w-[400px] glass-card p-8 rounded-2xl relative snap-center flex-shrink-0">
+                        <i data-lucide="quote" class="text-white/10 w-12 h-12 absolute top-6 right-6"></i>
+                        <p class="text-gray-300 italic mb-6 leading-relaxed" data-i18n="testimonials.t1_text">"Dahono's legal team streamlined our entire IP registration process. We can now focus on creating content knowing our assets are secure."</p>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 bg-gray-700 rounded-full overflow-hidden">
+                                <img src="https://ui-avatars.com/api/?name=Sarah+J&background=333&color=fff" alt="User" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm">Sarah Jenkins</h4>
+                                <p class="text-xs text-gray-500">CEO, Nexa Creative</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="min-w-[300px] md:min-w-[400px] glass-card p-8 rounded-2xl relative border-brand-primary/30 border snap-center flex-shrink-0">
+                        <i data-lucide="quote" class="text-brand-primary/20 w-12 h-12 absolute top-6 right-6"></i>
+                        <p class="text-gray-300 italic mb-6 leading-relaxed" data-i18n="testimonials.t2_text">"The management consultancy provided was a game-changer. They helped us restructure our operations, saving us significant overhead costs."</p>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 bg-gray-700 rounded-full overflow-hidden">
+                                <img src="https://ui-avatars.com/api/?name=David+L&background=DC2626&color=fff" alt="User" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm">David Lee</h4>
+                                <p class="text-xs text-gray-500">Director, TechFlow Corp</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="min-w-[300px] md:min-w-[400px] glass-card p-8 rounded-2xl relative snap-center flex-shrink-0">
+                        <i data-lucide="quote" class="text-white/10 w-12 h-12 absolute top-6 right-6"></i>
+                        <p class="text-gray-300 italic mb-6 leading-relaxed" data-i18n="testimonials.t3_text">"Professional, reliable, and truly understanding of the digital landscape. Dahono is an invaluable partner for any modern business."</p>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 bg-gray-700 rounded-full overflow-hidden">
+                                <img src="https://ui-avatars.com/api/?name=Maya+P&background=333&color=fff" alt="User" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm">Maya Putri</h4>
+                                <p class="text-xs text-gray-500">Founder, VirtuaTalent</p>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="min-w-[300px] md:min-w-[400px] glass-card p-8 rounded-2xl relative snap-center flex-shrink-0">
+                        <i data-lucide="quote" class="text-white/10 w-12 h-12 absolute top-6 right-6"></i>
+                        <p class="text-gray-300 italic mb-6 leading-relaxed" data-i18n="testimonials.t4_text">"Handling contracts used to be a nightmare. Dahono made it seamless and ensured we were protected from day one."</p>
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 bg-gray-700 rounded-full overflow-hidden">
+                                <img src="https://ui-avatars.com/api/?name=Alex+W&background=333&color=fff" alt="User" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm">Alex Wijaya</h4>
+                                <p class="text-xs text-gray-500">COO, Streamline Media</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="nextTestimonial" class="absolute right-[-20px] top-1/2 -translate-y-1/2 z-10 w-10 h-10 bg-brand-dark/80 border border-white/10 rounded-full flex items-center justify-center text-white hover:bg-brand-primary hover:border-brand-primary transition-all hidden md:flex opacity-0 group-hover:opacity-100 duration-300">
+                    <i data-lucide="chevron-right" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4" data-i18n="faq.title">Frequently Asked Questions</h2>
+                <p class="text-gray-400" data-i18n="faq.subtitle">Everything you need to know about our services.</p>
+            </div>
+            <div class="space-y-4">
+                <details class="glass-card rounded-xl group p-4 open:bg-white/5 transition-all">
+                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-white text-lg">
+                        <span data-i18n="faq.q1">What types of businesses do you work with?</span>
+                        <span class="transition group-open:rotate-180"><i data-lucide="chevron-down" class="w-5 h-5 text-gray-400"></i></span>
+                    </summary>
+                    <p class="text-gray-400 mt-4 leading-relaxed pl-2 border-l-2 border-brand-primary/50" data-i18n="faq.a1">We work with a diverse range of clients, from individual content creators and VTubers to established corporations and startups looking for legal structuring and management optimization.</p>
+                </details>
+                <details class="glass-card rounded-xl group p-4 open:bg-white/5 transition-all">
+                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-white text-lg">
+                        <span data-i18n="faq.q2">How do you handle confidentiality?</span>
+                        <span class="transition group-open:rotate-180"><i data-lucide="chevron-down" class="w-5 h-5 text-gray-400"></i></span>
+                    </summary>
+                    <p class="text-gray-400 mt-4 leading-relaxed pl-2 border-l-2 border-brand-primary/50" data-i18n="faq.a2">Confidentiality is paramount. We sign Non-Disclosure Agreements (NDAs) with all our clients before beginning any work to ensure your data and business strategies remain secure.</p>
+                </details>
+                <details class="glass-card rounded-xl group p-4 open:bg-white/5 transition-all">
+                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-white text-lg">
+                        <span data-i18n="faq.q3">Do you offer long-term management contracts?</span>
+                        <span class="transition group-open:rotate-180"><i data-lucide="chevron-down" class="w-5 h-5 text-gray-400"></i></span>
+                    </summary>
+                    <p class="text-gray-400 mt-4 leading-relaxed pl-2 border-l-2 border-brand-primary/50" data-i18n="faq.a3">Yes, we offer both project-based consulting and long-term management retainers. We can tailor our engagement model based on your specific needs and growth stage.</p>
+                </details>
+                 <details class="glass-card rounded-xl group p-4 open:bg-white/5 transition-all">
+                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-white text-lg">
+                        <span data-i18n="faq.q4">What is your pricing structure?</span>
+                        <span class="transition group-open:rotate-180"><i data-lucide="chevron-down" class="w-5 h-5 text-gray-400"></i></span>
+                    </summary>
+                    <p class="text-gray-400 mt-4 leading-relaxed pl-2 border-l-2 border-brand-primary/50" data-i18n="faq.a4">We offer flexible pricing models including fixed project fees, hourly rates for legal consultations, and monthly retainers for ongoing management support. Contact us for a custom quote.</p>
+                </details>
+                 <details class="glass-card rounded-xl group p-4 open:bg-white/5 transition-all">
+                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-white text-lg">
+                        <span data-i18n="faq.q5">Do you help with crisis management?</span>
+                        <span class="transition group-open:rotate-180"><i data-lucide="chevron-down" class="w-5 h-5 text-gray-400"></i></span>
+                    </summary>
+                    <p class="text-gray-400 mt-4 leading-relaxed pl-2 border-l-2 border-brand-primary/50" data-i18n="faq.a5">Absolutely. Our team is trained to handle PR crises and legal disputes swiftly to minimize impact on your brand's reputation and operations.</p>
+                </details>
+                 <details class="glass-card rounded-xl group p-4 open:bg-white/5 transition-all">
+                    <summary class="flex justify-between items-center font-medium cursor-pointer list-none text-white text-lg">
+                        <span data-i18n="faq.q6">How do I get started?</span>
+                        <span class="transition group-open:rotate-180"><i data-lucide="chevron-down" class="w-5 h-5 text-gray-400"></i></span>
+                    </summary>
+                    <p class="text-gray-400 mt-4 leading-relaxed pl-2 border-l-2 border-brand-primary/50" data-i18n="faq.a6">Simply contact us through our form or email at contact@dahono.com. We'll schedule an initial discovery call to understand your needs and propose a tailored solution.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section id="contact" class="py-24 relative overflow-hidden border-t border-white/5">
+        <div class="absolute right-0 bottom-0 w-96 h-96 bg-brand-primary/5 rounded-full blur-[120px] translate-y-1/3 translate-x-1/3 pointer-events-none"></div>
+        <div class="max-w-3xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-12">
+                <span class="text-brand-primary font-semibold tracking-wider uppercase text-sm" data-i18n="contact.tag">Start Your Journey</span>
+                <h2 class="text-3xl md:text-4xl font-bold mt-2 mb-4" data-i18n="contact.title">Get in Touch</h2>
+                <p class="text-gray-400" data-i18n="contact.subtitle">Ready to scale securely? Fill out the form below or chat with us on WhatsApp.</p>
+            </div>
+            <div class="glass-card p-8 md:p-10 rounded-3xl border-t border-white/10 shadow-2xl shadow-black/50">
+                <form class="space-y-6" onsubmit="event.preventDefault(); alert('Thank you! We will contact you shortly.');">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-gray-300 ml-1" data-i18n="contact.label_name">Name</label>
+                            <input type="text" placeholder="John Doe" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-medium text-gray-300 ml-1" data-i18n="contact.label_email">Email</label>
+                            <input type="email" placeholder="john@company.com" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all">
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium text-gray-300 ml-1" data-i18n="contact.label_interest">I'm interested in...</label>
+                        <div class="relative">
+                            <select class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white appearance-none focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all cursor-pointer">
+                                <option>Legal Consultation</option>
+                                <option>Corporate Management</option>
+                                <option>Business Development</option>
+                                <option>Regulatory Compliance</option>
+                                <option>Other</option>
+                            </select>
+                            <i data-lucide="chevron-down" class="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 pointer-events-none"></i>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-sm font-medium text-gray-300 ml-1" data-i18n="contact.label_message">Message</label>
+                        <textarea rows="4" placeholder="Tell us a bit about your needs..." class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all resize-none"></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-4 bg-brand-primary hover:bg-red-700 text-white font-bold rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-brand-primary/20 flex items-center justify-center gap-2">
+                        <span data-i18n="contact.btn_submit">Send Message</span> <i data-lucide="send" class="w-4 h-4"></i>
+                    </button>
+                </form>
             </div>
         </div>
     </section>
@@ -329,7 +771,6 @@
     <footer class="pt-16 md:pt-20 pb-10 border-t border-white/5">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-10 mb-16">
-                <!-- Brand -->
                 <div>
                     <div class="flex items-center gap-2 mb-4">
                         <div class="w-6 h-6 bg-white rounded flex items-center justify-center">
@@ -337,59 +778,443 @@
                         </div>
                         <span class="font-bold text-xl tracking-tight">DAHONO</span>
                     </div>
-                    <p class="text-gray-500 text-sm max-w-xs">
-                        Trusted Management and Legal Solutions for the digital frontier and corporate sector.
-                    </p>
+                    <p class="text-gray-500 text-sm max-w-xs" data-i18n="footer.desc">Trusted Management and Legal Solutions for the digital frontier and corporate sector.</p>
                 </div>
-
-                <!-- Links -->
                 <div class="flex gap-8">
                     <a href="https://instagram.com" target="_blank" class="text-gray-400 hover:text-white transition-colors flex items-center gap-2">
                         <i data-lucide="instagram" class="w-4 h-4"></i> Instagram
                     </a>
                 </div>
             </div>
-
-            <!-- Bottom -->
             <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="text-gray-600 text-sm text-center md:text-left">
-                    &copy; 2025 PT Dahono Consulting Agency. All rights reserved.
-                </p>
+                <p class="text-gray-600 text-sm text-center md:text-left">&copy; 2025 PT Dahono Consulting Agency. All rights reserved.</p>
                 <div class="flex gap-6">
-                    <a href="privacy.html" class="text-gray-600 hover:text-white text-sm transition-colors">Privacy Policy</a>
-                    <a href="tos.html" class="text-gray-600 hover:text-white text-sm transition-colors">Terms of Service</a>
+                    <a href="privacy.html" class="text-gray-600 hover:text-white text-sm transition-colors" data-i18n="footer.privacy">Privacy Policy</a>
+                    <a href="tos.html" class="text-gray-600 hover:text-white text-sm transition-colors" data-i18n="footer.tos">Terms of Service</a>
                 </div>
             </div>
         </div>
     </footer>
 
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/628884090791" target="_blank" class="fixed bottom-6 right-6 z-50 bg-[#25D366] hover:bg-[#128C7E] text-white p-3 md:p-4 rounded-full shadow-lg shadow-green-900/20 transition-all hover:scale-110 flex items-center gap-2 group animate-fade-in">
+        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6 md:w-7 md:h-7"><path d="M3 21l1.65-3.8a9 9 0 1 1 3.4 2.9L3 21"></path><path d="M9 10a.5.5 0 0 0 1 0V9a.5.5 0 0 0-1 0v1a5 5 0 0 0 5 5h1a.5.5 0 0 0 0-1h-1a.5.5 0 0 0 0 1"></path></svg>
+        <span class="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 ease-in-out whitespace-nowrap font-semibold text-sm md:text-base" data-i18n="whatsapp">Chat with Us</span>
+    </a>
+
     <!-- Scripts -->
     <script>
-        // Initialize Lucide Icons
         lucide.createIcons();
 
-        // Mobile Menu Toggle
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
             menu.classList.toggle('flex');
         }
 
-        // Smooth Scroll for anchor links
+        const container = document.getElementById('testimonialContainer');
+        const prevBtn = document.getElementById('prevTestimonial');
+        const nextBtn = document.getElementById('nextTestimonial');
+
+        nextBtn.addEventListener('click', () => {
+            const scrollAmount = 350;
+            const maxScroll = container.scrollWidth - container.clientWidth;
+            if (container.scrollLeft >= maxScroll - 10) {
+                container.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+                container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            const scrollAmount = 350;
+            if (container.scrollLeft <= 10) {
+                container.scrollTo({ left: container.scrollWidth, behavior: 'smooth' });
+            } else {
+                container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            }
+        });
+
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth'
-                    });
-                    // Close mobile menu if open
+                    target.scrollIntoView({ behavior: 'smooth' });
                     document.getElementById('mobile-menu').classList.add('hidden');
                     document.getElementById('mobile-menu').classList.remove('flex');
                 }
             });
         });
+
+        // LANGUAGE TRANSLATION LOGIC
+        const translations = {
+            en: {
+                nav: {
+                    about: "About",
+                    solutions: "Solutions",
+                    pricing: "Pricing",
+                    reviews: "Reviews",
+                    contact: "Contact",
+                    connect: "Connect With Us",
+                    contact_us: "Contact Us"
+                },
+                hero: {
+                    tag: "Corporate & Creative Solutions",
+                    headline_1: "Trusted Management",
+                    headline_2: "& Legal Partners",
+                    subheadline: "Empowering businesses and creators alike. We provide expert legal consultancy and management strategies to ensure growth, protection, and operational success.",
+                    btn_primary: "See Plans",
+                    btn_secondary: "Why Dahono?",
+                    trusted_by: "Trusted by Leaders & Innovators"
+                },
+                stats: {
+                    clients: "Corporate Clients",
+                    years: "Years Experience",
+                    success: "Success Rate"
+                },
+                about: {
+                    title_1: "Bridging",
+                    title_2: "innovation and compliance",
+                    title_3: "for modern enterprises.",
+                    desc_1: "Whether you are a scaling startup, an established corporation, or a high-impact creator, the foundation of success lies in solid management and legal security.",
+                    desc_2: "Dahono goes beyond traditional consultancy. We create an ecosystem where businesses can operate efficiently and talents can thrive, all while ensuring full legal protection and regulatory compliance."
+                },
+                services: {
+                    tag: "Our Expertise",
+                    title: "Comprehensive Corporate Solutions",
+                    c1_title: "Regulatory Compliance",
+                    c1_desc: "Ensuring your business operations adhere to local laws, obtaining necessary permits, and mitigating risks through strict regulatory adherence.",
+                    c2_title: "Corporate Law & IP",
+                    c2_desc: "Comprehensive legal support including contract drafting, intellectual property protection, regulatory compliance, and dispute resolution.",
+                    c3_title: "Management Consultancy",
+                    c3_desc: "End-to-end management support for organizations. From HR advisory to talent coordination and leadership consulting."
+                },
+                industries: {
+                    tag: "Who We Serve",
+                    title: "Specialized Industry Focus",
+                    i1_title: "Creative & Media",
+                    i1_desc: "Content Creators, VTubers, Production Houses & Agencies",
+                    i2_title: "Tech & Startups",
+                    i2_desc: "SaaS Companies, Fintech, Digital Platforms & Apps",
+                    i3_title: "Corporate",
+                    i3_desc: "Established Enterprises, Holdings, & Multi-National Corps",
+                    i4_title: "Retail & E-comm",
+                    i4_desc: "Online Stores, Franchises, F&B, & Lifestyle Brands"
+                },
+                pricing: {
+                    tag: "Flexible Plans",
+                    title: "Solutions for Every Stage",
+                    desc: "Transparent pricing tailored to your needs. Whether you're just starting or scaling up, we have a plan for you.",
+                    one_time: "One-time fee",
+                    try_now: "Try Now",
+                    per_doc: "Per document/session",
+                    get_verified: "Get Verified",
+                    starting: "Starting from",
+                    choose: "Choose Plan",
+                    custom: "Custom Pricing",
+                    contact_sales_price: "Contact Us",
+                    contact_sales_btn: "Contact Sales",
+                    // Plans Titles & Descs
+                    p1_title: "AI Contract Audit",
+                    p1_desc: "Instant automated analysis for quick peace of mind.",
+                    p2_title: "Basic Legal Check",
+                    p2_desc: "Expert human review to validate specific documents.",
+                    p3_title: "Business Growth",
+                    p3_desc: "Comprehensive support for growing entities.",
+                    p4_title: "Corporate Suite",
+                    p4_desc: "Tailored solutions for large-scale operations.",
+                    // Features
+                    p1_f1: "Auto-Detect Problematic Clauses",
+                    p1_f2: "Comprehensive Risk Analysis",
+                    p1_f3: "AI-Powered Suggestions",
+                    p1_f4: "Latest Regulatory Compliance",
+                    p2_f1: "Verified by Legal Consultant",
+                    p2_f2: "Specific Clause Explanation",
+                    p2_f3: "Direct Q&A Session (Chat)",
+                    p2_f4: "Actionable Advice",
+                    p3_f1: "Full Operational Audit",
+                    p3_f2: "Contract Drafting & Review",
+                    p3_f3: "Monthly Management Report",
+                    p3_f4: "Priority Support",
+                    p4_f1: "Dedicated Legal Team",
+                    p4_f2: "Crisis Management & PR",
+                    p4_f3: "International Expansion Strategy",
+                    p4_f4: "24/7 Advisory Access"
+                },
+                process: {
+                    tag: "How We Work",
+                    title: "A Seamless Path to Success",
+                    s1_title: "Discovery & Audit",
+                    s1_desc: "We analyze your current structure, identifying legal risks and operational bottlenecks.",
+                    s2_title: "Strategic Planning",
+                    s2_desc: "Our experts develop a tailored roadmap for legal compliance and management efficiency.",
+                    s3_title: "Implementation",
+                    s3_desc: "We execute the strategy, handling contracts, licensing, and operational restructuring.",
+                    s4_title: "Ongoing Support",
+                    s4_desc: "Continuous monitoring and advisory to ensure your business stays compliant as it grows."
+                },
+                testimonials: {
+                    title: "Trusted by the Best",
+                    desc: "Hear from the businesses and creators we've helped grow.",
+                    rated: "Top Rated Agency",
+                    t1_text: "\"Dahono's legal team streamlined our entire IP registration process. We can now focus on creating content knowing our assets are secure.\"",
+                    t2_text: "\"The management consultancy provided was a game-changer. They helped us restructure our operations, saving us significant overhead costs.\"",
+                    t3_text: "\"Professional, reliable, and truly understanding of the digital landscape. Dahono is an invaluable partner for any modern business.\"",
+                    t4_text: "\"Handling contracts used to be a nightmare. Dahono made it seamless and ensured we were protected from day one.\""
+                },
+                faq: {
+                    title: "Frequently Asked Questions",
+                    subtitle: "Everything you need to know about our services.",
+                    q1: "What types of businesses do you work with?",
+                    a1: "We work with a diverse range of clients, from individual content creators and VTubers to established corporations and startups looking for legal structuring and management optimization.",
+                    q2: "How do you handle confidentiality?",
+                    a2: "Confidentiality is paramount. We sign Non-Disclosure Agreements (NDAs) with all our clients before beginning any work to ensure your data and business strategies remain secure.",
+                    q3: "Do you offer long-term management contracts?",
+                    a3: "Yes, we offer both project-based consulting and long-term management retainers. We can tailor our engagement model based on your specific needs and growth stage.",
+                    q4: "What is your pricing structure?",
+                    a4: "We offer flexible pricing models including fixed project fees, hourly rates for legal consultations, and monthly retainers for ongoing management support. Contact us for a custom quote.",
+                    q5: "Do you help with crisis management?",
+                    a5: "Absolutely. Our team is trained to handle PR crises and legal disputes swiftly to minimize impact on your brand's reputation and operations.",
+                    q6: "How do I get started?",
+                    a6: "Simply contact us through our form or email at contact@dahono.com. We'll schedule an initial discovery call to understand your needs and propose a tailored solution."
+                },
+                contact: {
+                    tag: "Start Your Journey",
+                    title: "Get in Touch",
+                    subtitle: "Ready to scale securely? Fill out the form below or chat with us on WhatsApp.",
+                    label_name: "Name",
+                    label_email: "Email",
+                    label_interest: "I'm interested in...",
+                    label_message: "Message",
+                    btn_submit: "Send Message"
+                },
+                footer: {
+                    desc: "Trusted Management and Legal Solutions for the digital frontier and corporate sector.",
+                    privacy: "Privacy Policy",
+                    tos: "Terms of Service"
+                },
+                whatsapp: "Chat with Us"
+            },
+            id: {
+                nav: {
+                    about: "Tentang",
+                    solutions: "Solusi",
+                    pricing: "Harga",
+                    reviews: "Ulasan",
+                    contact: "Kontak",
+                    connect: "Hubungi Kami",
+                    contact_us: "Hubungi Kami"
+                },
+                hero: {
+                    tag: "Solusi Korporat & Kreatif",
+                    headline_1: "Manajemen Terpercaya",
+                    headline_2: "& Mitra Hukum",
+                    subheadline: "Memberdayakan bisnis dan kreator. Kami menyediakan konsultasi hukum ahli dan strategi manajemen untuk memastikan pertumbuhan, perlindungan, dan kesuksesan operasional perusahaan.",
+                    btn_primary: "Lihat Paket",
+                    btn_secondary: "Kenapa Dahono?",
+                    trusted_by: "Dipercaya oleh Para Pemimpin & Inovator"
+                },
+                stats: {
+                    clients: "Klien Korporat",
+                    years: "Tahun Pengalaman",
+                    success: "Tingkat Sukses"
+                },
+                about: {
+                    title_1: "Menjembatani",
+                    title_2: "inovasi dan kepatuhan",
+                    title_3: "untuk perusahaan modern.",
+                    desc_1: "Baik Anda startup yang sedang berkembang, perusahaan mapan, atau kreator berdampak tinggi, fondasi kesuksesan terletak pada manajemen yang solid dan keamanan hukum.",
+                    desc_2: "Dahono lebih dari sekadar konsultasi tradisional. Kami menciptakan ekosistem di mana bisnis dapat beroperasi secara efisien dan talenta dapat berkembang, sambil memastikan perlindungan hukum penuh dan kepatuhan terhadap regulasi."
+                },
+                services: {
+                    tag: "Keahlian Kami",
+                    title: "Solusi Korporat Komprehensif",
+                    c1_title: "Kepatuhan Regulasi",
+                    c1_desc: "Memastikan operasional bisnis Anda mematuhi hukum lokal, mendapatkan izin yang diperlukan, dan memitigasi risiko melalui kepatuhan regulasi yang ketat.",
+                    c2_title: "Hukum Korporat & HKI",
+                    c2_desc: "Dukungan hukum komprehensif termasuk penyusunan kontrak, perlindungan kekayaan intelektual, kepatuhan regulasi, dan penyelesaian sengketa.",
+                    c3_title: "Konsultasi Manajemen",
+                    c3_desc: "Dukungan manajemen menyeluruh untuk organisasi. Dari penasihat SDM hingga koordinasi talenta dan konsultasi kepemimpinan."
+                },
+                industries: {
+                    tag: "Siapa yang Kami Layani",
+                    title: "Fokus Industri Khusus",
+                    i1_title: "Kreatif & Media",
+                    i1_desc: "Kreator Konten, VTuber, Rumah Produksi & Agensi",
+                    i2_title: "Teknologi & Startup",
+                    i2_desc: "Perusahaan SaaS, Fintech, Platform Digital & Aplikasi",
+                    i3_title: "Korporat",
+                    i3_desc: "Perusahaan Mapan, Holdings, & Korporasi Multinasional",
+                    i4_title: "Ritel & E-comm",
+                    i4_desc: "Toko Online, Waralaba, F&B, & Merek Gaya Hidup"
+                },
+                pricing: {
+                    tag: "Paket Fleksibel",
+                    title: "Solusi untuk Setiap Tahap",
+                    desc: "Harga transparan yang disesuaikan dengan kebutuhan Anda. Apakah Anda baru memulai atau sedang berkembang, kami punya rencananya.",
+                    one_time: "Sekali bayar",
+                    try_now: "Coba Sekarang",
+                    per_doc: "Per dokumen/sesi",
+                    get_verified: "Verifikasi Sekarang",
+                    starting: "Mulai dari",
+                    choose: "Pilih Paket",
+                    custom: "Harga Khusus",
+                    contact_sales_price: "Hubungi Kami",
+                    contact_sales_btn: "Hubungi Sales",
+                    // Plans Titles & Descs
+                    p1_title: "Audit Kontrak AI",
+                    p1_desc: "Analisis otomatis instan untuk ketenangan pikiran yang cepat.",
+                    p2_title: "Cek Hukum Dasar",
+                    p2_desc: "Tinjauan ahli manusia untuk memvalidasi dokumen tertentu.",
+                    p3_title: "Pertumbuhan Bisnis",
+                    p3_desc: "Dukungan komprehensif untuk entitas yang sedang tumbuh.",
+                    p4_title: "Paket Korporat",
+                    p4_desc: "Solusi yang disesuaikan untuk operasi skala besar.",
+                    // Features
+                    p1_f1: "Deteksi Otomatis Klausul Bermasalah",
+                    p1_f2: "Analisis Risiko Komprehensif",
+                    p1_f3: "Saran Berbasis AI",
+                    p1_f4: "Kepatuhan Regulasi Terbaru",
+                    p2_f1: "Diverifikasi oleh Konsultan Hukum",
+                    p2_f2: "Penjelasan Klausul Spesifik",
+                    p2_f3: "Sesi Tanya Jawab Langsung (Chat)",
+                    p2_f4: "Saran yang Dapat Ditindaklanjuti",
+                    p3_f1: "Audit Operasional Penuh",
+                    p3_f2: "Penyusunan & Peninjauan Kontrak",
+                    p3_f3: "Laporan Manajemen Bulanan",
+                    p3_f4: "Dukungan Prioritas",
+                    p4_f1: "Tim Hukum Dedikasi",
+                    p4_f2: "Manajemen Krisis & PR",
+                    p4_f3: "Strategi Ekspansi Internasional",
+                    p4_f4: "Akses Penasihat 24/7"
+                },
+                process: {
+                    tag: "Cara Kerja Kami",
+                    title: "Jalan Mulus Menuju Sukses",
+                    s1_title: "Penemuan & Audit",
+                    s1_desc: "Kami menganalisis struktur Anda saat ini, mengidentifikasi risiko hukum dan hambatan operasional.",
+                    s2_title: "Perencanaan Strategis",
+                    s2_desc: "Ahli kami mengembangkan peta jalan yang disesuaikan untuk kepatuhan hukum dan efisiensi manajemen.",
+                    s3_title: "Implementasi",
+                    s3_desc: "Kami mengeksekusi strategi, menangani kontrak, perizinan, dan restrukturisasi operasional.",
+                    s4_title: "Dukungan Berkelanjutan",
+                    s4_desc: "Pemantauan dan nasihat berkelanjutan untuk memastikan bisnis Anda tetap patuh saat berkembang."
+                },
+                testimonials: {
+                    title: "Dipercaya oleh yang Terbaik",
+                    desc: "Dengar dari bisnis dan kreator yang telah kami bantu berkembang.",
+                    rated: "Agensi Peringkat Teratas",
+                    t1_text: "\"Tim hukum Dahono menyederhanakan seluruh proses pendaftaran HKI kami. Kami sekarang bisa fokus membuat konten mengetahui aset kami aman.\"",
+                    t2_text: "\"Konsultasi manajemen yang diberikan adalah pengubah permainan. Mereka membantu kami merestrukturisasi operasi, menghemat biaya overhead yang signifikan.\"",
+                    t3_text: "\"Profesional, andal, dan benar-benar memahami lanskap digital. Dahono adalah mitra tak ternilai bagi bisnis modern mana pun.\"",
+                    t4_text: "\"Menangani kontrak dulunya mimpi buruk. Dahono membuatnya mulus dan memastikan kami terlindungi sejak hari pertama.\""
+                },
+                faq: {
+                    title: "Pertanyaan yang Sering Diajukan",
+                    subtitle: "Segala sesuatu yang perlu Anda ketahui tentang layanan kami.",
+                    q1: "Jenis bisnis apa yang Anda tangani?",
+                    a1: "Kami bekerja dengan beragam klien, mulai dari kreator konten individu dan VTuber hingga korporasi mapan dan startup yang mencari penataan hukum dan optimalisasi manajemen.",
+                    q2: "Bagaimana Anda menangani kerahasiaan?",
+                    a2: "Kerahasiaan adalah yang utama. Kami menandatangani Perjanjian Non-Disclosure (NDA) dengan semua klien kami sebelum memulai pekerjaan apa pun untuk memastikan data dan strategi bisnis Anda tetap aman.",
+                    q3: "Apakah Anda menawarkan kontrak manajemen jangka panjang?",
+                    a3: "Ya, kami menawarkan konsultasi berbasis proyek dan retainer manajemen jangka panjang. Kami dapat menyesuaikan model keterlibatan kami berdasarkan kebutuhan spesifik dan tahap pertumbuhan Anda.",
+                    q4: "Bagaimana struktur harga Anda?",
+                    a4: "Kami menawarkan model harga fleksibel termasuk biaya proyek tetap, tarif per jam untuk konsultasi hukum, dan retainer bulanan untuk dukungan manajemen berkelanjutan. Hubungi kami untuk penawaran khusus.",
+                    q5: "Apakah Anda membantu manajemen krisis?",
+                    a5: "Tentu saja. Tim kami terlatih untuk menangani krisis PR dan sengketa hukum dengan cepat untuk meminimalkan dampak pada reputasi dan operasi merek Anda.",
+                    q6: "Bagaimana cara memulainya?",
+                    a6: "Cukup hubungi kami melalui formulir atau email di contact@dahono.com. Kami akan menjadwalkan panggilan penemuan awal untuk memahami kebutuhan Anda dan mengusulkan solusi yang disesuaikan."
+                },
+                contact: {
+                    tag: "Mulai Perjalanan Anda",
+                    title: "Hubungi Kami",
+                    subtitle: "Siap berkembang dengan aman? Isi formulir di bawah atau chat dengan kami di WhatsApp.",
+                    label_name: "Nama",
+                    label_email: "Email",
+                    label_interest: "Saya tertarik dengan...",
+                    label_message: "Pesan",
+                    btn_submit: "Kirim Pesan"
+                },
+                footer: {
+                    desc: "Solusi Manajemen dan Hukum Terpercaya untuk batas digital dan sektor korporat.",
+                    privacy: "Kebijakan Privasi",
+                    tos: "Syarat Layanan"
+                },
+                whatsapp: "Chat dengan Kami"
+            }
+        };
+
+        let currentLang = localStorage.getItem('lang') || 'en';
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('lang', lang);
+            
+            // Update Toggle Button Text
+            const desktopLabel = document.getElementById('lang-label-desktop');
+            const mobileLabel = document.getElementById('lang-label-mobile');
+            if(desktopLabel) desktopLabel.innerText = lang === 'en' ? 'EN' : 'ID';
+            if(mobileLabel) mobileLabel.innerText = lang === 'en' ? 'English' : 'Bahasa Indonesia';
+
+            // Translate Elements
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                const keys = key.split('.');
+                let translation = translations[lang];
+                
+                keys.forEach(k => {
+                    if (translation) translation = translation[k];
+                });
+
+                if (translation) {
+                    // Preserve icons if any (simple innerText replacement might kill icons inside buttons)
+                    // For buttons with icons, we usually wrap text in a span. 
+                    // Since my HTML structure mixed icons and text directly in some places, 
+                    // I will check if it has children.
+                    
+                    if (el.children.length > 0 && el.tagName === 'A' || el.tagName === 'BUTTON') {
+                       // Find the text node or specific span if structured, 
+                       // simpler way for this project structure:
+                       // Re-attach icon? No, simpler to just replace text if it's the only content
+                       // OR, if I look at my HTML, buttons have text + icon. 
+                       // Example: <span data-i18n>Text</span> <icon>
+                       // I updated HTML above to wrap text in spans for buttons where possible or applied data-i18n to the text container only.
+                       // However, for some buttons I applied it to the parent A tag.
+                       
+                       // Hack for this specific structure to keep the icon:
+                       // We replace the first text node we find.
+                       
+                       // Actually, the cleanest way is to ensure data-i18n is on a span/p/h tag that ONLY contains text.
+                       // I have updated the HTML above to ensure data-i18n is mostly on text-only elements or I will use a safe replacement.
+                       
+                       // For buttons like "Connect with Us", it has text directly.
+                       // Let's use innerHTML but be careful.
+                       // Actually, better strategy: I updated the HTML to put text inside spans where needed or simple text replacement is fine.
+                       // For buttons with icons, I moved data-i18n to the SPAN inside the button in the HTML above (e.g., whatsapp button, contact button).
+                       // Wait, I did that for some, let me double check the HTML I generated.
+                       // I see: <span data-i18n="hero.btn_secondary">Why Dahono?</span>
+                       // Perfect.
+                       
+                       el.innerText = translation;
+                    } else {
+                       el.innerText = translation;
+                    }
+                }
+            });
+        }
+
+        function toggleLanguage() {
+            const newLang = currentLang === 'en' ? 'id' : 'en';
+            setLanguage(newLang);
+        }
+
+        // Initialize language on load
+        document.addEventListener('DOMContentLoaded', () => {
+            setLanguage(currentLang);
+        });
+
     </script>
 </body>
 </html>

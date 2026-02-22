@@ -34,7 +34,7 @@
                         'fade-in': 'fadeIn 1s ease-out forwards',
                         'slide-up': 'slideUp 0.8s ease-out forwards',
                         'scroll': 'scroll 40s linear infinite',
-                        'infinite-scroll': 'infinite-scroll 25s linear infinite',
+                        'infinite-scroll': 'infinite-scroll 35s linear infinite',
                     },
                     keyframes: {
                         blob: {
@@ -53,7 +53,7 @@
                         },
                         'infinite-scroll': {
                             '0%': { transform: 'translateX(0)' },
-                            '100%': { transform: 'translateX(-100%)' },
+                            '100%': { transform: 'translateX(-50%)' }, /* Menggeser persis 50% untuk seamless loop */
                         }
                     }
                 }
@@ -219,23 +219,27 @@
             <div class="mt-24 border-t border-white/5 pt-10 animate-slide-up px-4" style="animation-delay: 0.3s;">
                 <p class="text-xs text-gray-500 font-semibold tracking-widest uppercase mb-8" data-i18n="hero.trusted_by">Trusted by Leaders & Innovators</p>
                 
-                <div class="relative w-full max-w-5xl mx-auto overflow-hidden mask-linear">
-                    <div class="flex w-max gap-16 group items-center">
-                        <div class="flex gap-16 items-center animate-infinite-scroll group-hover:paused">
+                <div class="relative w-full max-w-5xl mx-auto overflow-hidden mask-linear group">
+                    <div class="flex w-max animate-infinite-scroll group-hover:[animation-play-state:paused]">
+                        <div class="flex gap-16 items-center pr-16">
                             <img src="https://framerusercontent.com/images/O5G4HZMNj39No18BMtCtv2kU4Yg.png" alt="Client Logo" class="h-10 md:h-14 w-auto max-w-[120px] md:max-w-[160px] object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
                             <img src="https://framerusercontent.com/images/WXSchTXPksG98FKip9w3BrL0Yk.png" alt="Client Logo" class="h-10 md:h-14 w-auto max-w-[120px] md:max-w-[160px] object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
                             <img src="https://framerusercontent.com/images/9AoYrpUVOEz8A3XFGZdLm5AIso.png" alt="Client Logo" class="h-10 md:h-14 w-auto max-w-[120px] md:max-w-[160px] object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
                             <img src="https://framerusercontent.com/images/LEft60ybEOU7ByICn7oO1XLmmBw.png" alt="Client Logo" class="h-10 md:h-14 w-auto max-w-[120px] md:max-w-[160px] object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
                             <img src="https://wp-feradi.vercel.app/logo.png" alt="Feradi Logo" class="h-10 md:h-14 w-auto max-w-[120px] md:max-w-[160px] object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0 invert">
                             <img src="https://sabako.id/_next/static/media/otabyte.a270808d.png" alt="Otabyte Logo" class="h-10 md:h-14 w-auto max-w-[120px] md:max-w-[160px] object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0 invert">
+                            <img src="https://res.cloudinary.com/dy3wbouns/image/upload/v1771799763/rnmf6xhlayxmt2qlhkb0.png" alt="SanPoi Store Logo" class="h-10 md:h-14 w-auto max-w-[120px] md:max-w-[160px] object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
+                            <img src="https://res.cloudinary.com/dy3wbouns/image/upload/v1771799816/hvlya8bdqumegw5mt5me.jpg" alt="ASGARDIANS Logo" class="h-10 md:h-14 w-auto max-w-[120px] md:max-w-[160px] object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0 rounded-lg">
                         </div>
-                        <div class="flex gap-16 items-center animate-infinite-scroll group-hover:paused" aria-hidden="true">
+                        <div class="flex gap-16 items-center pr-16" aria-hidden="true">
                             <img src="https://framerusercontent.com/images/O5G4HZMNj39No18BMtCtv2kU4Yg.png" alt="Client Logo" class="h-10 md:h-14 w-auto max-w-[120px] md:max-w-[160px] object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
                             <img src="https://framerusercontent.com/images/WXSchTXPksG98FKip9w3BrL0Yk.png" alt="Client Logo" class="h-10 md:h-14 w-auto max-w-[120px] md:max-w-[160px] object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
                             <img src="https://framerusercontent.com/images/9AoYrpUVOEz8A3XFGZdLm5AIso.png" alt="Client Logo" class="h-10 md:h-14 w-auto max-w-[120px] md:max-w-[160px] object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
                             <img src="https://framerusercontent.com/images/LEft60ybEOU7ByICn7oO1XLmmBw.png" alt="Client Logo" class="h-10 md:h-14 w-auto max-w-[120px] md:max-w-[160px] object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
                             <img src="https://wp-feradi.vercel.app/logo.png" alt="Feradi Logo" class="h-10 md:h-14 w-auto max-w-[120px] md:max-w-[160px] object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0 invert">
                             <img src="https://sabako.id/_next/static/media/otabyte.a270808d.png" alt="Otabyte Logo" class="h-10 md:h-14 w-auto max-w-[120px] md:max-w-[160px] object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0 invert">
+                            <img src="https://res.cloudinary.com/dy3wbouns/image/upload/v1771799763/rnmf6xhlayxmt2qlhkb0.png" alt="SanPoi Store Logo" class="h-10 md:h-14 w-auto max-w-[120px] md:max-w-[160px] object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0">
+                            <img src="https://res.cloudinary.com/dy3wbouns/image/upload/v1771799816/hvlya8bdqumegw5mt5me.jpg" alt="ASGARDIANS Logo" class="h-10 md:h-14 w-auto max-w-[120px] md:max-w-[160px] object-contain opacity-60 hover:opacity-100 transition-opacity grayscale hover:grayscale-0 rounded-lg">
                         </div>
                     </div>
                 </div>
@@ -251,13 +255,12 @@
                     <p class="text-gray-400 text-sm uppercase tracking-wide" data-i18n="stats.clients">Corporate Clients</p>
                 </div>
                 <div class="px-4 py-2">
-                    <p class="text-3xl md:text-4xl font-bold text-white mb-2">5+</p>
+                    <p class="text-3xl md:text-4xl font-bold text-white mb-2">3+</p>
                     <p class="text-gray-400 text-sm uppercase tracking-wide" data-i18n="stats.years">Years Experience</p>
                 </div>
                 <div class="px-4 py-2 flex flex-col items-center justify-center">
                     <p class="text-3xl md:text-4xl font-bold text-white mb-2">100%</p>
                     <p class="text-gray-400 text-sm uppercase tracking-wide" data-i18n="stats.success">Satisfaction Rate</p>
-                    <p class="text-brand-primary/80 text-xs mt-1.5 font-medium" data-i18n="stats.client_first">Client-first approach</p>
                 </div>
             </div>
         </div>
@@ -799,21 +802,21 @@
                 <p class="text-gray-400" data-i18n="contact.subtitle">Ready to scale securely? Fill out the form below or chat with us on WhatsApp.</p>
             </div>
             <div class="glass-card p-8 md:p-10 rounded-3xl border-t border-white/10 shadow-2xl shadow-black/50">
-                <form class="space-y-6" onsubmit="event.preventDefault(); alert('Thank you! We will contact you shortly.');">
+                <form class="space-y-6" onsubmit="sendEmail(event)">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-2">
                             <label class="text-sm font-medium text-gray-300 ml-1" data-i18n="contact.label_name">Name</label>
-                            <input type="text" placeholder="John Doe" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all">
+                            <input id="contact-name" type="text" required placeholder="John Doe" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all">
                         </div>
                         <div class="space-y-2">
                             <label class="text-sm font-medium text-gray-300 ml-1" data-i18n="contact.label_email">Email</label>
-                            <input type="email" placeholder="john@company.com" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all">
+                            <input id="contact-email" type="email" required placeholder="john@company.com" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all">
                         </div>
                     </div>
                     <div class="space-y-2">
                         <label class="text-sm font-medium text-gray-300 ml-1" data-i18n="contact.label_interest">I'm interested in...</label>
                         <div class="relative">
-                            <select class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white appearance-none focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all cursor-pointer">
+                            <select id="contact-interest" class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white appearance-none focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all cursor-pointer">
                                 <option>Legal Consultation</option>
                                 <option>Corporate Management</option>
                                 <option>Business Development</option>
@@ -825,7 +828,7 @@
                     </div>
                     <div class="space-y-2">
                         <label class="text-sm font-medium text-gray-300 ml-1" data-i18n="contact.label_message">Message</label>
-                        <textarea rows="4" placeholder="Tell us a bit about your needs..." class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all resize-none"></textarea>
+                        <textarea id="contact-message" required rows="4" placeholder="Tell us a bit about your needs..." class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-brand-primary focus:ring-1 focus:ring-brand-primary transition-all resize-none"></textarea>
                     </div>
                     <button type="submit" class="w-full py-4 bg-brand-primary hover:bg-red-700 text-white font-bold rounded-xl transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-brand-primary/20 flex items-center justify-center gap-2">
                         <span data-i18n="contact.btn_submit">Send Message</span> <i data-lucide="send" class="w-4 h-4"></i>
@@ -873,7 +876,7 @@
 
             <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
                 <div class="text-center md:text-left">
-                    <p class="text-gray-600 text-sm">&copy; 2025 PT Dahono Consulting Agency. All rights reserved.</p>
+                    <p class="text-gray-600 text-sm">&copy; 2023 - 2026 PT Dahono Consulting Agency. All rights reserved.</p>
                     <p class="text-gray-600 text-xs mt-1" data-i18n="footer.registered">PT Dahono Consulting Agency is a registered entity in Indonesia.</p>
                 </div>
                 <div class="flex gap-6">
@@ -932,6 +935,23 @@
                 }
             });
         });
+
+        // SEND EMAIL FUNCTION
+        function sendEmail(event) {
+            event.preventDefault(); // Prevent page reload
+
+            const name = document.getElementById('contact-name').value;
+            const email = document.getElementById('contact-email').value;
+            const interest = document.getElementById('contact-interest').value;
+            const message = document.getElementById('contact-message').value;
+
+            const destinationEmail = "contact@dahono.com";
+            const subject = `Website Inquiry: ${interest} - ${name}`;
+            const body = `Hello Dahono Team,\n\nI am reaching out regarding ${interest}.\n\nMessage Details:\n${message}\n\n--\nContact Information:\nName: ${name}\nEmail: ${email}`;
+
+            // Create mailto link and trigger it
+            window.location.href = `mailto:${destinationEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        }
 
         // LANGUAGE TRANSLATION LOGIC
         const translations = {
